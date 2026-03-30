@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>مشاريعنا — مؤسسة ديمة الشمال للمقاولات</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #0D2137;
+      --primary-light: #1A3A5C;
+      --accent: #E8A020;
+      --accent-light: #F5C053;
+      --teal: #0A7E6E;
+      --white: #FFFFFF;
+      --off-white: #F8F9FA;
+      --gray: #6B7280;
+      --light-gray: #E5E7EB;
+      --dark: #0A0F1A;
+      --gradient: linear-gradient(135deg, var(--primary) 0%, #0A3D62 50%, var(--teal) 100%);
+      --gradient-gold: linear-gradient(135deg, #E8A020, #F5C053, #E8A020);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Cairo', sans-serif; background: var(--white); color: var(--dark); overflow-x: hidden; }
+
+    /* NAVBAR */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 0 5%; height: 75px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(13,33,55,0.97); backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(232,160,32,0.2);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .nav-logo-icon { width: 45px; height: 45px; background: var(--gradient-gold); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px; color: var(--primary); font-weight: 900; }
+    .nav-logo-text .name { font-size: 16px; font-weight: 800; color: var(--white); }
+    .nav-logo-text .tagline { font-size: 11px; color: var(--accent-light); }
+    .nav-links { display: flex; align-items: center; gap: 8px; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 14px; font-weight: 500; padding: 8px 14px; border-radius: 8px; transition: all 0.3s; }
+    .nav-links a:hover { color: var(--accent); background: rgba(232,160,32,0.1); }
+    .nav-cta { background: var(--gradient-gold) !important; color: var(--primary) !important; font-weight: 700 !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 5px; }
+    .hamburger span { width: 25px; height: 2px; background: var(--white); border-radius: 2px; }
+    .mobile-menu { display: none; position: fixed; top: 75px; left: 0; right: 0; background: rgba(13,33,55,0.98); backdrop-filter: blur(20px); padding: 20px 5%; z-index: 999; flex-direction: column; gap: 4px; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 15px; font-weight: 500; padding: 12px 16px; border-radius: 10px; }
+
+    /* PAGE HERO */
+    .page-hero {
+      padding-top: 75px;
+      background: var(--gradient);
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url('images/hero.png') center/cover;
+      opacity: 0.1;
+    }
+    .page-hero-inner {
+      position: relative; z-index: 1;
+      max-width: 1200px; margin: 0 auto;
+      padding: 70px 5% 80px;
+    }
+    .breadcrumb {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; color: rgba(255,255,255,0.6);
+      margin-bottom: 20px;
+    }
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .breadcrumb i { font-size: 10px; }
+    .page-hero h1 { font-size: clamp(32px,5vw,52px); font-weight: 900; color: var(--white); margin-bottom: 14px; }
+    .page-hero h1 span { color: var(--accent); }
+    .page-hero p { font-size: 16px; color: rgba(255,255,255,0.75); max-width: 540px; line-height: 1.8; }
+    .page-hero-stats {
+      display: flex; gap: 40px; margin-top: 36px; flex-wrap: wrap;
+    }
+    .ph-stat .num { font-size: 30px; font-weight: 900; color: var(--accent); }
+    .ph-stat .lbl { font-size: 13px; color: rgba(255,255,255,0.65); }
+
+    /* FILTERS */
+    .filters-wrap {
+      background: var(--white);
+      border-bottom: 1px solid var(--light-gray);
+      position: sticky; top: 75px; z-index: 100;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+    .filters {
+      max-width: 1200px; margin: 0 auto;
+      padding: 18px 5%;
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 9px 22px; border-radius: 50px; font-size: 13px; font-weight: 600;
+      border: 2px solid var(--light-gray); background: var(--white); color: var(--gray);
+      cursor: pointer; transition: all 0.3s; font-family: 'Cairo', sans-serif;
+    }
+    .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .filter-btn.active { background: var(--primary); border-color: var(--primary); color: var(--white); }
+    .filter-count { font-size: 11px; background: var(--light-gray); border-radius: 20px; padding: 1px 7px; margin-right: 4px; }
+    .filter-btn.active .filter-count { background: rgba(255,255,255,0.2); }
+
+    /* PROJECTS GRID */
+    .projects-section {
+      max-width: 1200px; margin: 0 auto;
+      padding: 50px 5% 80px;
+    }
+    .projects-count {
+      font-size: 14px; color: var(--gray); margin-bottom: 30px;
+    }
+    .projects-count strong { color: var(--primary); }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .project-card {
+      border-radius: 20px; overflow: hidden;
+      border: 1px solid var(--light-gray);
+      background: var(--white);
+      transition: all 0.4s;
+      cursor: pointer;
+    }
+    .project-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+      border-color: transparent;
+    }
+    .project-card.hidden { display: none; }
+
+    .project-img {
+      position: relative; height: 220px; overflow: hidden;
+    }
+    .project-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.5s;
+    }
+    .project-card:hover .project-img img { transform: scale(1.07); }
+
+    .project-type-badge {
+      position: absolute; top: 14px; right: 14px;
+      padding: 5px 14px; border-radius: 50px;
+      font-size: 12px; font-weight: 700;
+      backdrop-filter: blur(10px);
+    }
+    .badge-residential { background: rgba(10,126,110,0.85); color: var(--white); }
+    .badge-commercial  { background: rgba(13,33,55,0.85);  color: var(--accent); }
+    .badge-infra       { background: rgba(232,160,32,0.9);  color: var(--primary); }
+    .badge-government  { background: rgba(99,55,180,0.85);  color: var(--white); }
+    .badge-finishing   { background: rgba(220,50,50,0.85);  color: var(--white); }
+
+    .project-status {
+      position: absolute; top: 14px; left: 14px;
+      display: flex; align-items: center; gap: 5px;
+      background: rgba(0,0,0,0.55); backdrop-filter: blur(8px);
+      color: var(--white); font-size: 11px; font-weight: 600;
+      padding: 4px 10px; border-radius: 20px;
+    }
+    .dot { width: 7px; height: 7px; border-radius: 50%; }
+    .dot.done { background: #22c55e; }
+    .dot.ongoing { background: var(--accent); }
+
+    .project-body { padding: 22px; }
+    .project-title { font-size: 17px; font-weight: 800; color: var(--primary); margin-bottom: 8px; line-height: 1.4; }
+
+    .project-desc { font-size: 13px; color: var(--gray); line-height: 1.7; margin-bottom: 18px; font-weight: 400; }
+
+    .project-meta-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+      border-top: 1px solid var(--light-gray); padding-top: 16px;
+    }
+    .meta-item { display: flex; align-items: center; gap: 7px; }
+    .meta-item i { color: var(--accent); font-size: 12px; width: 16px; }
+    .meta-item span { font-size: 12px; color: var(--gray); font-weight: 400; }
+    .meta-item strong { font-size: 13px; color: var(--primary); font-weight: 700; display: block; }
+
+    .project-footer {
+      padding: 14px 22px;
+      background: var(--off-white);
+      display: flex; justify-content: space-between; align-items: center;
+      border-top: 1px solid var(--light-gray);
+    }
+    .project-value { font-size: 13px; color: var(--gray); }
+    .project-value strong { color: var(--primary); font-size: 15px; }
+    .project-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--teal); font-size: 13px; font-weight: 700;
+      text-decoration: none; transition: gap 0.3s;
+    }
+    .project-link:hover { gap: 10px; }
+
+    /* CTA */
+    .cta-section {
+      background: var(--gradient);
+      padding: 80px 5%;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .cta-section::before {
+      content: ''; position: absolute; inset: 0;
+      background: url('images/hero.png') center/cover; opacity: 0.07;
+    }
+    .cta-section h2 { font-size: clamp(24px,4vw,40px); font-weight: 900; color: var(--white); margin-bottom: 14px; position: relative; }
+    .cta-section h2 span { color: var(--accent); }
+    .cta-section p { font-size: 15px; color: rgba(255,255,255,0.75); max-width: 500px; margin: 0 auto 36px; line-height: 1.8; position: relative; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--gradient-gold); color: var(--primary);
+      padding: 15px 32px; border-radius: 12px; font-size: 15px; font-weight: 700;
+      text-decoration: none; transition: all 0.3s; font-family: 'Cairo', sans-serif;
+      box-shadow: 0 8px 25px rgba(232,160,32,0.4); position: relative;
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(232,160,32,0.6); }
+
+    /* FOOTER */
+    footer { background: var(--dark); color: var(--white); padding: 40px 5% 24px; }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px; }
+    .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.4); }
+    .footer-bottom span { color: var(--accent); }
+    .footer-nav { display: flex; gap: 20px; flex-wrap: wrap; }
+    .footer-nav a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 13px; transition: color 0.3s; }
+    .footer-nav a:hover { color: var(--accent); }
+
+    /* SCROLL TOP */
+    .scroll-top { position: fixed; bottom: 30px; left: 30px; width: 48px; height: 48px; background: var(--gradient-gold); color: var(--primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; border: none; box-shadow: 0 6px 20px rgba(232,160,32,0.4); transition: all 0.3s; opacity: 0; pointer-events: none; z-index: 999; }
+    .scroll-top.visible { opacity: 1; pointer-events: all; }
+    .scroll-top:hover { transform: translateY(-4px); }
+
+    /* NO RESULTS */
+    .no-results { grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--gray); }
+    .no-results i { font-size: 48px; color: var(--light-gray); display: block; margin-bottom: 16px; }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) { .projects-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .filters { gap: 8px; }
+      .page-hero-stats { gap: 24px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">د</div>
+    <div class="nav-logo-text">
+      <div class="name">ديمة الشمال للمقاولات</div>
+      <div class="tagline">نبني المستقبل بكل احترافية</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#about">من نحن</a></li>
+    <li><a href="index.html#services">خدماتنا</a></li>
+    <li><a href="projects.html" style="color:var(--accent)">مشاريعنا</a></li>
+    <li><a href="index.html#why">لماذا نحن</a></li>
+    <li><a href="index.html#contact" class="nav-cta">تواصل معنا</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html#about" onclick="toggleMenu()">من نحن</a>
+  <a href="index.html#services" onclick="toggleMenu()">خدماتنا</a>
+  <a href="projects.html" onclick="toggleMenu()">مشاريعنا</a>
+  <a href="index.html#why" onclick="toggleMenu()">لماذا نحن</a>
+  <a href="index.html#contact" onclick="toggleMenu()">تواصل معنا</a>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="breadcrumb">
+      <a href="index.html"><i class="fas fa-home"></i> الرئيسية</a>
+      <i class="fas fa-chevron-left"></i>
+      <span>مشاريعنا</span>
+    </div>
+    <h1>معرض <span>مشاريعنا</span></h1>
+    <p>أكثر من 150 مشروعاً منجزاً في مختلف القطاعات — كل مشروع يعكس التزامنا بأعلى معايير الجودة والإتقان</p>
+    <div class="page-hero-stats">
+      <div class="ph-stat"><div class="num">+150</div><div class="lbl">مشروع منجز</div></div>
+      <div class="ph-stat"><div class="num">+10</div><div class="lbl">سنوات خبرة</div></div>
+      <div class="ph-stat"><div class="num">6</div><div class="lbl">قطاعات عمل</div></div>
+      <div class="ph-stat"><div class="num">+80</div><div class="lbl">عميل موثوق</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FILTERS -->
+<div class="filters-wrap">
+  <div class="filters">
+    <button class="filter-btn active" data-filter="all">
+      الكل <span class="filter-count">10</span>
+    </button>
+    <button class="filter-btn" data-filter="residential">
+      <i class="fas fa-home" style="margin-left:5px;font-size:11px"></i> سكني <span class="filter-count">3</span>
+    </button>
+    <button class="filter-btn" data-filter="commercial">
+      <i class="fas fa-building" style="margin-left:5px;font-size:11px"></i> تجاري <span class="filter-count">3</span>
+    </button>
+    <button class="filter-btn" data-filter="infra">
+      <i class="fas fa-road" style="margin-left:5px;font-size:11px"></i> بنية تحتية <span class="filter-count">2</span>
+    </button>
+    <button class="filter-btn" data-filter="government">
+      <i class="fas fa-landmark" style="margin-left:5px;font-size:11px"></i> حكومي <span class="filter-count">2</span>
+    </button>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<section class="projects-section">
+  <p class="projects-count">عرض <strong id="visibleCount">10</strong> مشروع</p>
+
+  <div class="projects-grid" id="projectsGrid">
+
+    <!-- Project 1 -->
+    <div class="project-card" data-type="residential">
+      <div class="project-img">
+        <img src="images/project1.png" alt="مجمع فلل ديمة الشمال" />
+        <span class="project-type-badge badge-residential">سكني</span>
+        <span class="project-status"><span class="dot done"></span>مكتمل</span>
+      </div>
+      <div class="project-body">
+        <h3 class="project-title">مجمع فلل ديمة الشمال السكني</h3>
+        <p class="project-desc">مجمع سكني فاخر يضم 24 فيلا بتصاميم عصرية وتشطيبات راقية، مع مساحات خضراء وبوابات أمنية متكاملة.</p>
+        <div class="project-meta-grid">
+          <div class="meta-item"><i class="fas fa-map-marker-alt"></i><div><span>الموقع</span><strong>منطقة الشمال</strong></div></div>
+          <div class="meta-item"><i class="fas fa-calendar"></i><div><span>سنة التسليم</span><strong>2024</strong></div></div>
+          <div class="meta-item"><i class="fas fa-ruler-combined"></i><div><span>المساحة</span><strong>18,000 م²</strong></div></div>
+          <div class="meta-item"><i class="fas fa-clock"></i><div><span>مدة التنفيذ</span><strong>18 شهراً</strong></div></div>
+        </div>
+      </div>
+      <div class="project-footer">
+        <div class="project-value"><span class="project-value">قيمة المشروع</span><br/><strong>12 مليون ريال</strong></div>
+        <a href="index.html#contact" class="project-link">طلب مماثل <i class="fas fa-arrow-left"></i></a>
+      </div>
+    </div>
+
+    <!-- Project 2 -->
+    <div class="project-card" data-type="commercial">
+      <div class="project-img">
+        <img src="images/project2.png" alt="البرج التجاري" />
+        <span class="project-type-badge badge-commercial">تجاري</span>
+        <span class="project-status"><span class="dot done"></span>مكتمل</span>
+      </div>
+      <div class="project-body">
+        <h3 class="project-title">البرج التجاري الحديث — المدينة</h3>
+        <p class="project-desc">برج تجاري متعدد الاستخدامات يضم مكاتب ومحلات تجارية على 15 طابقاً، بواجهة زجاجية عصرية وأنظمة ذكية متكاملة.</p>
+        <div class="project-meta-grid">
+          <div class="meta-item"><i class="fas fa-map-marker-alt"></i><div><span>الموقع</span><strong>وسط المدينة</strong></div></div>
+          <div class="meta-item"><i class="fas fa-calendar"></i><div><span>سنة التسليم</span><strong>2023</strong></div></div>
+          <div class="meta-item"><i class="fas fa-layer-group"></i><div><span>عدد الطوابق</span><strong>15 طابق</strong></div></div>
+          <div class="meta-item"><i class="fas fa-clock"></i><div><span>مدة التنفيذ</span><strong>24 شهراً</strong></div></div>
+        </div>
+      </div>
+      <div class="project-footer">
+        <div class="project-value"><span class="project-value">قيمة المشروع</span><br/><strong>35 مليون ريال</strong></div>
+        <a href="index.html#contact" class="project-link">طلب مماثل <i class="fas fa-arrow-left"></i></a>
+      </div>
+    </div>
+
+    <!-- Project 3 -->
+    <div class="project-card" data-type="infra">
+      <div class="project-img">
+        <img src="images/project3.png" alt="الطريق الإقليمي" />
+        <span class="project-type-badge badge-infra">بنية تحتية</span>
+        <span class="project-status"><span class="dot done"></span>مكتمل</span>
+      </div>
+      <div class="project-body">
+        <h3 class="project-title">مشروع الطريق الإقليمي الشمالي</h3>
+        <p class="project-desc">إنشاء طريق إقليمي بطول 45 كيلومتر مع أعمال الرصف والإنارة وعلامات المرور الكاملة ضمن مواصفات هيئة الطرق.</p>
+        <div class="project-meta-grid">
+          <div class="meta-item"><i class="fas fa-map-marker-alt"></i><div><span>الموقع</span><strong>المنطقة الشمالية</strong></div></div>
+          <div class="meta-item"><i class="fas fa-calendar"></i><div><span>سنة التسليم</span><strong>2023</strong></div></div>
+          <div class="meta-item"><i class="fas fa-road"></i><div><span>الطول</span><strong>45 كم</strong></div></div>
+          <div class="meta-item"><i class="fas fa-clock"></i><div><span>مدة التنفيذ</span><strong>14 شهراً</strong></div></div>
+        </div>
+      </div>
+      <div class="project-footer">
+        <div class="project-value"><span class="project-value">قيمة المشروع</span><br/><strong>28 مليون ريال</strong></div>
+        <a href="index.html#contact" class="project-link">طلب مماثل <i class="fas fa-arrow-left"></i></a>
+      </div>
+    </div>
+
+    <!-- Project 4 -->
+    <div class="project-card" data-type="government">
+      <div class="project-img">
+        <img src="images/project4.png" alt="مجمع المدارس" />
+        <span class="project-type-badge badge-government">حكومي</span>
+        <span class="project-status"><span class="dot done"></span>مكتمل</span>
+      </div>
+      <div class="project-body">
+        <h3 class="project-title">مجمع المدارس الحكومية — المنطقة</h3>
+        <p class="project-desc">إنشاء مجمع تعليمي يضم 3 مدارس (ابتدائي، متوسط، ثانوي) بطاقة 2400 طالب، مع ملاعب ومرافق متكاملة.</p>
+        <div class="project-meta-grid">
+          <div class="meta-item"><i class="fas fa-map-marker-alt"></i><div><span>الموقع</span><strong>المنطقة الشمالية</strong></div></div>
+          <div class="meta-item"><i class="fas fa-calendar"></i><div><span>سنة التسليم</span><strong>2022</strong></div></div>
+          <div class="meta-item"><i class="fas fa-ruler-combined"></i><div><span>المساحة</span><strong>22,000 م²</strong></div></div>
+          <div class="meta-item"><i class="fas fa-clock"></i><div><span>مدة التنفيذ</span><strong>20 شهراً</strong></div></div>
+        </div>
+      </div>
+      <div class="project-footer">
+        <div class="project-value"><span class="project-value">قيمة المشروع</span><br/><strong>19 مليون ريال</strong></div>
+        <a href="index.html#contact" class="project-link">طلب مماثل <i class="fas fa-arrow-left"></i></a>
+      </div>
+    </div>
+
+    <!-- Project 5 -->
+    <div class="project-card" data-type="residential">
+      <div class="project-img">
+        <img src="images/project1.png" alt="أبراج سكنية" style="object-position: 30% center" />
+        <span class="project-type-badge badge-residential">سكني</span>
+        <span class="project-status"><span class="dot ongoing"></span>جاري التنفيذ</span>
+      </div>
+      <div class="project-body">
+        <h3 class="project-title">أبراج الشمال السكنية — 3 أبراج</h3>
+        <p class="project-desc">مشروع ثلاثة أبراج سكنية بارتفاع 10 طوابق لكل برج، يضم 180 شقة بمساحات متنوعة مع كافة الخدمات والمرافق.</p>
+        <div class="project-meta-grid">
+          <div class="meta-item"><i class="fas fa-map-marker-alt"></i><div><span>الموقع</span><strong>حفر الباطن</strong></div></div>
+          <div class="meta-item"><i class="fas fa-calendar"></i><div><span>تاريخ التسليم</span><strong>2025</strong></div></div>
+          <div class="meta-item"><i class="fas fa-home"></i><div><span>عدد الوحدات</span><strong>180 شقة</strong></div></div>
+          <div class="meta-item"><i class="fas fa-clock"></i><div><span>نسبة الإنجاز</span><strong>75%</strong></div></div>
+        </div>
+      </div>
+      <div class="project-footer">
+        <div class="project-value"><span class="project-value">قيمة المشروع</span><br/><strong>42 مليون ريال</strong></div>
+        <a href="index.html#contact" class="project-link">طلب مماثل <i class="fas fa-arrow-left"></i></a>
+      </div>
+    </div>
+
+    <!-- Project 6 -->
+    <div class="project-card" data-type="commercial">
+      <div class="project-img">
+        <img src="images/project2.png" alt="مركز تجاري" style="object-position: center 30%" />
+        <span class="project-type-badge badge-commercial">تجاري</span>
+        <span class="project-status"><span class="dot done"></span>مكتمل</span>
+      </div>
+      <div class="project-body">
+        <h3 class="project-title">مركز ديمة التجاري — عرعر</h3>
+        <p class="project-desc">مركز تجاري متكامل على مساحة 8000 م² يضم 120 محلاً تجارياً وبوابات ذكية ومواقف متعددة الطوابق.</p>
+        <div class="project-meta-grid">
+          <div class="meta-item"><i class="fas fa-map-marker-alt"></i><div><span>الموقع</span><strong>عرعر</strong></div></div>
+          <div class="meta-item"><i class="fas fa-calendar"></i><div><span>سنة التسليم</span><strong>2022</strong></div></div>
+          <div class="meta-item"><i class="fas fa-store"></i><div><span>عدد المحلات</span><strong>120 محل</strong></div></div>
+          <div class="meta-item"><i class="fas fa-clock"></i><div><span>مدة التنفيذ</span><strong>22 شهراً</strong></div></div>
+        </div>
+      </div>
+      <div class="project-footer">
+        <div class="project-value"><span class="project-value">قيمة المشروع</span><br/><strong>23 مليون ريال</strong></div>
+        <a href="index.html#contact" class="project-link">طلب مماثل <i class="fas fa-arrow-left"></i></a>
+      </div>
+    </div>
+
+    <!-- Project 7 -->
+    <div class="project-card" data-type="infra">
+      <div class="project-img">
+        <img src="images/project3.png" alt="شبكة صرف صحي" style="object-position: center 60%" />
+        <span class="project-type-badge badge-infra">بنية تحتية</span>
+        <span class="project-status"><span class="dot done"></span>مكتمل</span>
+      </div>
+      <div class="project-body">
+        <h3 class="project-title">شبكة الصرف الصحي — الحي الشمالي</h3>
+        <p class="project-desc">مشروع تمديد شبكة صرف صحي لحي سكني يخدم 5000 أسرة، يشمل محطة ضخ رئيسية وشبكة أنابيب بطول 32 كم.</p>
+        <div class="project-meta-grid">
+          <div class="meta-item"><i class="fas fa-map-marker-alt"></i><div><span>الموقع</span><strong>طريف</strong></div></div>
+          <div class="meta-item"><i class="fas fa-calendar"></i><div><span>سنة التسليم</span><strong>2021</strong></div></div>
+          <div class="meta-item"><i class="fas fa-tint"></i><div><span>طول الشبكة</span><strong>32 كم</strong></div></div>
+          <div class="meta-item"><i class="fas fa-clock"></i><div><span>مدة التنفيذ</span><strong>16 شهراً</strong></div></div>
+        </div>
+      </div>
+      <div class="project-footer">
+        <div class="project-value"><span class="project-value">قيمة المشروع</span><br/><strong>15 مليون ريال</strong></div>
+        <a href="index.html#contact" class="project-link">طلب مماثل <i class="fas fa-arrow-left"></i></a>
+      </div>
+    </div>
+
+    <!-- Project 8 -->
+    <div class="project-card" data-type="government">
+      <div class="project-img">
+        <img src="images/project4.png" alt="مبنى بلدية" style="object-position: center 70%" />
+        <span class="project-type-badge badge-government">حكومي</span>
+        <span class="project-status"><span class="dot done"></span>مكتمل</span>
+      </div>
+      <div class="project-body">
+        <h3 class="project-title">مبنى البلدية الجديد — رفحاء</h3>
+        <p class="project-desc">مبنى إداري حكومي من 5 طوابق يضم جميع مكاتب البلدية ومراكز الخدمات المدنية، مع قاعة اجتماعات متعددة الأغراض.</p>
+        <div class="project-meta-grid">
+          <div class="meta-item"><i class="fas fa-map-marker-alt"></i><div><span>الموقع</span><strong>رفحاء</strong></div></div>
+          <div class="meta-item"><i class="fas fa-calendar"></i><div><span>سنة التسليم</span><strong>2021</strong></div></div>
+          <div class="meta-item"><i class="fas fa-layer-group"></i><div><span>عدد الطوابق</span><strong>5 طوابق</strong></div></div>
+          <div class="meta-item"><i class="fas fa-clock"></i><div><span>مدة التنفيذ</span><strong>18 شهراً</strong></div></div>
+        </div>
+      </div>
+      <div class="project-footer">
+        <div class="project-value"><span class="project-value">قيمة المشروع</span><br/><strong>17 مليون ريال</strong></div>
+        <a href="index.html#contact" class="project-link">طلب مماثل <i class="fas fa-arrow-left"></i></a>
+      </div>
+    </div>
+
+    <!-- Project 9 -->
+    <div class="project-card" data-type="residential">
+      <div class="project-img">
+        <img src="images/project1.png" alt="فلل فاخرة" style="object-position: 70% center" />
+        <span class="project-type-badge badge-residential">سكني</span>
+        <span class="project-status"><span class="dot done"></span>مكتمل</span>
+      </div>
+      <div class="project-body">
+        <h3 class="project-title">مشروع الفلل الفاخرة — الشريط الأخضر</h3>
+        <p class="project-desc">12 فيلا فاخرة بتصاميم معمارية مميزة وأنظمة المنزل الذكي، مع حدائق خاصة ومسابح ومواقف مسقوفة.</p>
+        <div class="project-meta-grid">
+          <div class="meta-item"><i class="fas fa-map-marker-alt"></i><div><span>الموقع</span><strong>حفر الباطن</strong></div></div>
+          <div class="meta-item"><i class="fas fa-calendar"></i><div><span>سنة التسليم</span><strong>2023</strong></div></div>
+          <div class="meta-item"><i class="fas fa-home"></i><div><span>عدد الفلل</span><strong>12 فيلا</strong></div></div>
+          <div class="meta-item"><i class="fas fa-clock"></i><div><span>مدة التنفيذ</span><strong>12 شهراً</strong></div></div>
+        </div>
+      </div>
+      <div class="project-footer">
+        <div class="project-value"><span class="project-value">قيمة المشروع</span><br/><strong>9 مليون ريال</strong></div>
+        <a href="index.html#contact" class="project-link">طلب مماثل <i class="fas fa-arrow-left"></i></a>
+      </div>
+    </div>
+
+    <!-- Project 10 -->
+    <div class="project-card" data-type="commercial">
+      <div class="project-img">
+        <img src="images/project2.png" alt="مستودعات صناعية" />
+        <span class="project-type-badge badge-commercial">تجاري</span>
+        <span class="project-status"><span class="dot ongoing"></span>جاري التنفيذ</span>
+      </div>
+      <div class="project-body">
+        <h3 class="project-title">المنطقة اللوجستية الصناعية — الشمال</h3>
+        <p class="project-desc">مجمع مستودعات صناعية بمساحة 15,000 م² مخصص لشركات التوزيع والخدمات اللوجستية، مع مراسي تحميل متعددة.</p>
+        <div class="project-meta-grid">
+          <div class="meta-item"><i class="fas fa-map-marker-alt"></i><div><span>الموقع</span><strong>عرعر</strong></div></div>
+          <div class="meta-item"><i class="fas fa-calendar"></i><div><span>تاريخ التسليم</span><strong>2025</strong></div></div>
+          <div class="meta-item"><i class="fas fa-warehouse"></i><div><span>المساحة</span><strong>15,000 م²</strong></div></div>
+          <div class="meta-item"><i class="fas fa-clock"></i><div><span>نسبة الإنجاز</span><strong>60%</strong></div></div>
+        </div>
+      </div>
+      <div class="project-footer">
+        <div class="project-value"><span class="project-value">قيمة المشروع</span><br/><strong>31 مليون ريال</strong></div>
+        <a href="index.html#contact" class="project-link">طلب مماثل <i class="fas fa-arrow-left"></i></a>
+      </div>
+    </div>
+
+  </div><!-- end grid -->
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>هل لديك مشروع <span>تريد تنفيذه؟</span></h2>
+  <p>تواصل معنا اليوم واحصل على استشارة مجانية وعرض سعر لمشروعك خلال 24 ساعة.</p>
+  <a href="index.html#contact" class="btn-primary">
+    <i class="fas fa-phone"></i> تواصل معنا الآن
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-bottom">
+    <p>© 2025 <span>مؤسسة ديمة الشمال للمقاولات</span>. جميع الحقوق محفوظة.</p>
+    <nav class="footer-nav">
+      <a href="index.html">الرئيسية</a>
+      <a href="index.html#services">الخدمات</a>
+      <a href="projects.html">المشاريع</a>
+      <a href="index.html#contact">تواصل</a>
+    </nav>
+  </div>
+</footer>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <i class="fas fa-arrow-up"></i>
+</button>
+
+<script>
+  window.addEventListener('scroll', () => {
+    document.getElementById('scrollTop').classList.toggle('visible', window.scrollY > 400);
+  });
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  // Filter logic
+  const btns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.project-card');
+  const countEl = document.getElementById('visibleCount');
+
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      let count = 0;
+      cards.forEach(card => {
+        const show = filter === 'all' || card.dataset.type === filter;
+        card.classList.toggle('hidden', !show);
+        if (show) count++;
+      });
+      countEl.textContent = count;
+    });
+  });
+
+  // Animate on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  cards.forEach((card, i) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(30px)';
+    card.style.transition = `opacity 0.5s ease ${i * 0.07}s, transform 0.5s ease ${i * 0.07}s`;
+    observer.observe(card);
+  });
+</script>
+</body>
+</html>
